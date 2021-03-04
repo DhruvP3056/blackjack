@@ -13,7 +13,39 @@ package ca.sheridancollege.project;
  */
 public abstract class Card {
     //default modifier for child classes
+    
+    public enum Value{
+        Extra,ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,JACK,QUEEN,KING
+    }
+    public enum Suit{
+        SPADES,DIAMONDS,CLUBS,HEARTS
+    }
+    private Suit suit;
+    private Value value;
+    public Card(){
+        
+    }
+    public Card(Value value,Suit suit){
+        this.suit = suit;
+        this.value=value;
+    }
+    public Suit getSuit() {
+        return suit;
+    }
 
+    public void setSuit(Suit suit) {
+        this.suit = suit;
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public void setValue(Value value) {
+        this.value = value;
+    }
+    
+    
     /**
      * Students should implement this method for their specific children classes
      *
