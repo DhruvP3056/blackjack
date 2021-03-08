@@ -33,3 +33,6 @@ public class TwentyOneValidator {
     }
     
 }
+
+// need to create several variables (balance, bets) for players and for the dealer.
+// dealer class needs to be created first 
