@@ -14,45 +14,91 @@ import java.util.Iterator;
  */
 public class Hand extends GroupOfCards {
 
-    ArrayList<Card> hands = new ArrayList<>();
-    ArrayList<Card> Deck = new ArrayList<>();
+    private ArrayList<Card> uCards = new ArrayList<>();
+    private ArrayList<Card> dCards = new ArrayList<>();
+    private ArrayList<Card> Deck = new ArrayList<>();
     private int count = 0;
     private int remaining = 52;
     private boolean user = true;
 
     public Hand() {
+        super();
         Deck = super.getCards();
         generateHand();
+        super.UpdateData(Deck, uCards, dCards, count, remaining);
     }
 
     public void generateHand() {
-    Deck.forEach(x -> {
-            System.out.println(x.getValue() + " " + x.getSuit());
-        });
-    while(count < 4){
-            for (int i = 0;i<4;i++) {
+            for (int i = 0; i < 4; i++) {
                 Iterator<Card> it = Deck.iterator();
-                hands.add(it.next());
-                it.remove();
-                count++;
-                remaining--;
+                if (i == 0 || i == 2) {
+                    uCards.add(it.next());
+                    it.remove();
+                    count++;
+                    remaining--;
+                }
+                if (i == 1 || i == 3) {
+                    dCards.add(it.next());
+                    it.remove();
+                    count++;
+                    remaining--;
+                }
             }
     }
-        
+
+    public ArrayList<Card> getDeck() {
+        return Deck;
+    }
+
+    public void setuCards(ArrayList<Card> uCards) {
+        this.uCards = uCards;
+    }
+
+    public void setdCards(ArrayList<Card> dCards) {
+        this.dCards = dCards;
+    }
+
+    public void setDeck(ArrayList<Card> Deck) {
+        this.Deck = Deck;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setRemaining(int remaining) {
+        this.remaining = remaining;
+    }
+
+    public void printUserCards() {
+        System.out.println("User Cards Are \n");
+        uCards.forEach(x -> {
+            System.out.println(x.getValue() + " " + x.getSuit());
+        });
+    }
+
+    public void printDealerCards() {
+        System.out.println("Dealer Cards Are");
+
+        dCards.forEach(x -> {
+            System.out.println(x.getValue() + " " + x.getSuit());
+        });
     }
 
     @Override
     public void print() {
-        System.out.println();
-        System.out.println();
-        hands.forEach(x -> {
+        System.out.println("Hello From Hand CLass");
+        Deck.forEach(x -> {
             System.out.println(x.getValue() + " " + x.getSuit());
         });
-        System.out.println();
-//        Deck.forEach(x -> {
-//            System.out.println(x.getValue() + " " + x.getSuit());
-//        });
-        System.out.println(hands.size() + " " + Deck.size() + " " + remaining);
+//        printUserCards();
+//        System.out.println();
+//        printDealerCards();
+//        System.out.println();
+//        System.out.println(count + " " + Deck.size() + " " + remaining);
 
+    }
+    public void printParent(){
+        super.print();
     }
 }

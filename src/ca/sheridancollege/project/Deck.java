@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -36,9 +36,10 @@ public final class Deck extends Card {
     }
 
     public void print(){
-        for(Card x:cards){
+//        System.out.println(cards.size());
+        cards.forEach(x -> {
             System.out.println( x.getValue() + " of "+ x.getSuit() );
-        }
+        });
     }
     @Override
     public String toString(){

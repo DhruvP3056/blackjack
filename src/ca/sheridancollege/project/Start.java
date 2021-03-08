@@ -17,10 +17,14 @@ public class Start {
     public static void main(String[] args) {
 //      Deck t = new Deck();
 //      t.print();
-    GroupOfCards t = new GroupOfCards();
-    t.print();
+//    GroupOfCards t = new GroupOfCards();
+//    t.print();
 //    Hand h = new Hand();
 //    h.print();
+//    points i = new points("Hello");
+        HitOrStand t = new HitOrStand("Hello");
+        
+    
     }
     
 }

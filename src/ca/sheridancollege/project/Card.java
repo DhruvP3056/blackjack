@@ -10,12 +10,13 @@ package ca.sheridancollege.project;
  * game. Students wishing to add to the code should remember to add themselves as a modifier.
  *
  * @author dancye
+ * @author Dhruv Patel March 2021
  */
 public abstract class Card {
     //default modifier for child classes
     
     public enum Value{
-        Extra,ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,JACK,QUEEN,KING
+        Extra,ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING
     }
     public enum Suit{
         SPADES,DIAMONDS,CLUBS,HEARTS
