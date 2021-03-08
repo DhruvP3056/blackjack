@@ -21,6 +21,12 @@ public class TwentyOneValidator {
         total += card;
         if (total == win){
             Player.balance = balance * multiplier;
+            if(dealer.hand == win){
+                Player.balance = balance;
+                for (Player player.bets: Players){
+                    dealer.balance += player.bets;
+                }   
+            }
         } else {
             // call to stand or hit
         }
