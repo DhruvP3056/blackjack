@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author vigne
+ * @author Vigneshwar Premachandran
  */
 public class GameManager extends Game {
 

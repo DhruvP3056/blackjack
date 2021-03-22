@@ -2,7 +2,7 @@ package ca.sheridancollege.project;
 
 /**
  *
- * @author vigneshwar premachandran
+ * @author Vigneshwar Premachandran
  */
 public class StandardPlayer extends Player{
 
