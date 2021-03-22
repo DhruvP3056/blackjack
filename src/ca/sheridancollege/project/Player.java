@@ -14,16 +14,23 @@ package ca.sheridancollege.project;
 public abstract class Player {
 
     private String name; //the unique name for this player
-
+    private double wallet = 500;
     /**
      * A constructor that allows you to set the player's unique ID
      *
      * @param name the unique ID to assign to this player.
      */
+    public Player(){
+    }
+    
     public Player(String name) {
         this.name = name;
     }
 
+    public Player(String dealer, double houseBalance){
+        this.name = dealer;
+        this.wallet = houseBalance;
+    }
     /**
      * @return the player name
      */
@@ -40,6 +47,13 @@ public abstract class Player {
         this.name = name;
     }
 
+    public double getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(double wallet) {
+        this.wallet = wallet;
+    }
     /**
      * The method to be overridden when you subclass the Player class with your specific type of Player and filled in
      * with logic to play your game.
