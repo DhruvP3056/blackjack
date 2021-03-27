@@ -9,23 +9,32 @@ package ca.sheridancollege.project;
  * A class to be used as the base Card class for the project. Must be general enough to be instantiated for any Card
  * game. Students wishing to add to the code should remember to add themselves as a modifier.
  *
- * @author Vigneshwar
+ * @author dancye
+ * @author Dhruv Patel March 2021
  */
 public abstract class Card {
     //default modifier for child classes
-    private Value value;
-    private Suit suit;
     
+    public enum Value{
+        Extra,ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING
+    }
     public enum Suit{
-        HEARTS, CLUBS, SPADES, DIAMONDS
+        SPADES,DIAMONDS,CLUBS,HEARTS
     }
-    public enum Value {
-        ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN,
-        EIGHT, NINE, TEN, JACK, QUEEN, KING
+    private Suit suit;
+    private Value value;
+    public Card(){
+        
     }
-    
-    public Card(Value value, Suit suit) {
-        this.value = value;
+    public Card(Value value,Suit suit){
+        this.suit = suit;
+        this.value=value;
+    }
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public void setSuit(Suit suit) {
         this.suit = suit;
     }
 
@@ -36,14 +45,7 @@ public abstract class Card {
     public void setValue(Value value) {
         this.value = value;
     }
-
-    public Suit getSuit() {
-        return suit;
-    }
-
-    public void setSuit(Suit suit) {
-        this.suit = suit;
-    }
+    
     
     /**
      * Students should implement this method for their specific children classes
