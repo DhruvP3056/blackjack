@@ -12,10 +12,9 @@ package ca.sheridancollege.project;
 
 // checks to see if a player/dealer has a hand totaling 21
 // user after the first 2 dealt cards and and everytime thereafter
-public class TwentyOneValidator {
+public class HandValueValidator {
     
-    public final int win = 21;
-    public final int multiplier = 1.5;
+    public final int EIN = 21;
     
     for (Card card: hand) {
         total += card;
