@@ -146,61 +146,94 @@ public class GameManager extends Game {
         
         System.out.print("The dealer and each player will now be dealt two cards\n");
         
-            Hand dealer = new Hand();
-            Hand player1 = new Hand();
-            Hand player2 = new Hand();
-            Hand player3 = new Hand();
-            Hand player4 = new Hand();
-
-            dealer.printDealerCards();
+        Hand dealingCards = new Hand();
         
+        String dealer = "Dealer: ";
+        dealingCards.generateDealerHand(dealer);           
+          
         if (joining.size() == 1 ) {
+            
+            String player1 = joining.get(0).getName();
         
-            System.out.print(joining.get(0).getName() + ": ");
-            player1.printUserCards();
+            dealingCards.generatePlayer1Hand(player1);
+           
+            dealingCards.printDealerCards();
+            
+            System.out.print(player1 + ": ");        
+            dealingCards.printPlayer1Cards();
     
         }
-        
+       
         else if (joining.size() == 2 ) {
             
-            System.out.print(joining.get(0).getName() + ": ");
-            player1.printUserCards();
+            String player1 = joining.get(0).getName();
+            String player2 = joining.get(1).getName();
             
-            System.out.print(joining.get(1).getName() + ": ");
-            player2.printUserCards();
-        
-        
+            dealingCards.generatePlayer1Hand(player1);     
+            dealingCards.generatePlayer2Hand(player2);
+            
+            dealingCards.printDealerCards();
+            
+            System.out.print(player1 + ": ");
+            dealingCards.printPlayer1Cards();
+            
+            System.out.print(player2 + ": ");
+            dealingCards.printPlayer2Cards();
+
         }
-        
+     
         else if (joining.size() == 3 ) {
             
-            System.out.print(joining.get(0).getName() + ": ");
-            player1.printUserCards();
+            String player1 = joining.get(0).getName();
+            String player2 = joining.get(1).getName();
+            String player3 = joining.get(2).getName();
             
-            System.out.print(joining.get(1).getName() + ": ");
-            player2.printUserCards();
+            dealingCards.generatePlayer1Hand(player1); 
+            dealingCards.generatePlayer2Hand(player2); 
+            dealingCards.generatePlayer3Hand(player3);
             
-            System.out.print(joining.get(2).getName() + ": ");
-            player3.printUserCards();
-        
+            dealingCards.printDealerCards();
+
+            System.out.print(player1 + ": ");                        
+            dealingCards.printPlayer1Cards();
+
+            System.out.print(player2 + ": ");            
+            dealingCards.printPlayer2Cards();
+
+            System.out.print(player3 + ": ");
+            dealingCards.printPlayer3Cards();   
         
         }
         
         else if (joining.size() == 4 ) {
-           
-            System.out.print(joining.get(0).getName() + ": ");
-            player1.printUserCards();
             
-            System.out.print(joining.get(1).getName() + ": ");
-            player2.printUserCards();
+            String player1 = joining.get(0).getName();
+            String player2 = joining.get(1).getName();
+            String player3 = joining.get(2).getName();
+            String player4 = joining.get(3).getName();
             
-            System.out.print(joining.get(2).getName() + ": ");
-            player3.printUserCards();
+            dealingCards.generatePlayer1Hand(player1);
+            dealingCards.generatePlayer2Hand(player2);
+            dealingCards.generatePlayer3Hand(player3);
+            dealingCards.generatePlayer4Hand(player4);
+
+            dealingCards.printDealerCards();
+            System.out.print(player1 + ": ");
+            dealingCards.printPlayer1Cards();
             
-            System.out.print(joining.get(3).getName() + ": ");
-            player4.printUserCards();
+            System.out.print(player2 + ": ");
+            dealingCards.printPlayer2Cards();
+            
+            System.out.print(player3 + ": ");
+            dealingCards.printPlayer3Cards();
+            
+            System.out.print(player4 + ": ");
+            dealingCards.printPlayer4Cards();
+          
             
             }
+        
+        dealingCards.Remaining();
        
     }
     
