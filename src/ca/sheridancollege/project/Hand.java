@@ -15,7 +15,10 @@ import java.util.Iterator;
  */
 public class Hand extends GroupOfCards {
 
-    private ArrayList<Card> uCards = new ArrayList<>();
+    private ArrayList<Card> p1Cards = new ArrayList<>();
+    private ArrayList<Card> p2Cards = new ArrayList<>();
+    private ArrayList<Card> p3Cards = new ArrayList<>();
+    private ArrayList<Card> p4Cards = new ArrayList<>();
     private ArrayList<Card> dCards = new ArrayList<>();
     private ArrayList<Card> Deck = new ArrayList<>();
     private int count = 0;
@@ -24,35 +27,78 @@ public class Hand extends GroupOfCards {
 
     public Hand() {
         super();
-        Deck = super.getCards();
-        generateHand();
-        super.UpdateData(Deck, uCards, dCards, count, remaining);
+        Deck = super.getCards();  
+        super.UpdateData(Deck, dCards, p1Cards, p2Cards, p3Cards, p4Cards, count, remaining);
     }
-
-    public void generateHand() {
-            for (int i = 0; i < 4; i++) {
-                Iterator<Card> it = Deck.iterator();
-                if (i == 0 || i == 2) {
-                    uCards.add(it.next());
-                    it.remove();
-                    count++;
-                    remaining--;
-                }
-                if (i == 1 || i == 3) {
+    
+    public void generateDealerHand (String dealer) {
+        Iterator<Card> it = Deck.iterator();
+        while (count < 2) {
+                if (count == 0 || count == 1) {
                     dCards.add(it.next());
                     it.remove();
                     count++;
                     remaining--;
                 }
+                }
             }
+
+    public void generatePlayer1Hand(String player1) {
+         Iterator<Card> it = Deck.iterator(); 
+         while (count >= 2 && count < 4) {
+                if (count == 2 || count == 3) {
+                    p1Cards.add(it.next());
+                    it.remove();
+                    count++;
+                    remaining--;
+                }
+                }
     }
+    
+    public void generatePlayer2Hand(String player2) {
+        Iterator<Card> it = Deck.iterator(); 
+        while (count >= 4 && count < 6) {
+                if (count == 4 || count == 5) {
+                    p2Cards.add(it.next());
+                    it.remove();
+                    count++;
+                    remaining--;
+                }
+                }
+    }
+    
+    public void generatePlayer3Hand (String player3) {
+        Iterator<Card> it = Deck.iterator();
+        while (count >= 6 && count < 8) {
+                if (count == 6 || count == 7) {
+                    p3Cards.add(it.next());
+                    it.remove();
+                    count++;
+                    remaining--;
+                }
+            }
+        }
+    
+    public void generatePlayer4Hand (String player4) {
+        Iterator<Card> it = Deck.iterator();
+        while (count >= 8 && count < 10) {
+                if (count == 8 || count == 9) {
+                    p4Cards.add(it.next());
+                    it.remove();
+                    count++;
+                    remaining--;
+                }
+            }
+        }
+    
+    
 
     public ArrayList<Card> getDeck() {
         return Deck;
     }
 
     public void setuCards(ArrayList<Card> uCards) {
-        this.uCards = uCards;
+        this.p1Cards = uCards;
     }
 
     public void setdCards(ArrayList<Card> dCards) {
@@ -67,12 +113,36 @@ public class Hand extends GroupOfCards {
         this.count = count;
     }
 
-    public void setRemaining(int remaining) {
-        this.remaining = remaining;
+    public void Remaining() {
+        System.out.println("Remaining Cards: " + remaining);
     }
 
-    public void printUserCards() {
-        for (Card x : uCards) {
+    public void printPlayer1Cards() {
+        for (Card x : p1Cards) {
+            System.out.print(x.getValue() + " of " + x.getSuit() + "\t");
+        }
+        
+        System.out.println();
+    }
+    
+    public void printPlayer2Cards() {
+        for (Card x : p2Cards) {
+            System.out.print(x.getValue() + " of " + x.getSuit() + "\t");
+        }
+        
+        System.out.println();
+    }
+    
+    public void printPlayer3Cards() {
+        for (Card x : p3Cards) {
+            System.out.print(x.getValue() + " of " + x.getSuit() + "\t");
+        }
+        
+        System.out.println();
+    }
+    
+    public void printPlayer4Cards() {
+        for (Card x : p4Cards) {
             System.out.print(x.getValue() + " of " + x.getSuit() + "\t");
         }
         
