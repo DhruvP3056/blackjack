@@ -21,7 +21,10 @@ public class GroupOfCards {
 
     //The group of cards, stored in an ArrayList
     private ArrayList<Card> cards = new ArrayList<>();
-    private ArrayList<Card> uCards = new ArrayList<>();
+    private ArrayList<Card> p1Cards = new ArrayList<>();
+    private ArrayList<Card> p2Cards = new ArrayList<>();
+    private ArrayList<Card> p3Cards = new ArrayList<>();
+    private ArrayList<Card> p4Cards = new ArrayList<>();
     private ArrayList<Card> dCards = new ArrayList<>();
     private int count = 0;
     private int remaining = 52;
@@ -42,10 +45,13 @@ public class GroupOfCards {
         return cards;
     }
 
-    public void UpdateData(ArrayList cards, ArrayList uCards, ArrayList dCards, int count, int remaining) {
+    public void UpdateData(ArrayList cards, ArrayList dCards, ArrayList p1Cards, ArrayList p2Cards, ArrayList p3Cards, ArrayList p4Cards, int count, int remaining) {
         this.cards = cards;
-        this.uCards = uCards;
         this.dCards = dCards;
+        this.p1Cards = p1Cards;
+        this.p2Cards = p2Cards;
+        this.p3Cards = p3Cards;
+        this.p4Cards = p4Cards;    
         this.count = count;
         this.remaining = remaining;
     }
@@ -57,7 +63,7 @@ public class GroupOfCards {
     }
 
     public ArrayList<Card> getuCards() {
-        return uCards;
+        return p1Cards;
     }
 
     public ArrayList<Card> getdCards() {
