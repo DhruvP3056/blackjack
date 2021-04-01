@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package New_Edit;
+package Edit2;
 
-import New_Edit.Card.Value;
+import Edit2.*;
+import Edit2.Card.Value;
 import java.util.ArrayList;
 
 /**
@@ -92,35 +93,52 @@ public class NaturalValidator {
     }
 
     public void validate(StandardPlayer player, ArrayList<Card> uCards, ArrayList<Card> dCards) {
+
         validateDealerHand(dCards);
+
         validateUserHand(uCards);
-        if (uTotal == WIN) {
-            System.out.println(player.getName() + "You Got A Natural Win!!");
-            result="uWin";
-        } else if (dTotal == WIN) {
-            result="dWin";
-            System.out.println("Dealer Got A Natural Win");
-            System.out.println("Next Round");
+
+        if (this.uTotal == WIN) {
+
+            System.out.println(player.getName() + " You Got A Natural Win!!");
+
+            result = "uWin";
+
+        } else if (this.dTotal == WIN) {
+
+            result = "dWin";
+        } else {
+            result = "next";
         }
     }
 
     public void validateNaturalWinner(StandardPlayer player, ArrayList<Card> uCards, ArrayList<Card> dCards, ArrayList<Card> deck, int size, int count3) {
 
-        if (result.equalsIgnoreCase("done")) {
+        HitOrStand hitOrStand = new HitOrStand(player, uCards, dCards, deck);
 
-            HitOrStand hitOrStand = new HitOrStand(player, uCards, dCards, deck);
-            hitOrStand.play(player);
+        hitOrStand.play(player);
+
+        this.cards = hitOrStand.getCards();
+
+        this.uCards = hitOrStand.getuCards();
+
+        this.dCards = hitOrStand.getdCards();
+
+        if (count3 == (size-1)) {
+
+            System.out.println();
+
+            System.out.println("Dealers Turn");
+
+            hitOrStand.DealersTurn();
+
             this.cards = hitOrStand.getCards();
+
             this.uCards = hitOrStand.getuCards();
+
             this.dCards = hitOrStand.getdCards();
-
-            if (count3 == size - 1) {
-                System.out.println();
-                System.out.println("Dealers Turn");
-                hitOrStand.DealersTurn();
-            }
-
         }
+
     }
 
 }

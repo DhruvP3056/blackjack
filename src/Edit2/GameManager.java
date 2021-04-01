@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package New_Edit;
+package Edit2;
 
+import Edit2.*;
 import static java.lang.System.exit;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -162,6 +163,7 @@ public class GameManager {
                 System.out.println();
 
                 System.out.println(player.getName() + "  " + "Your Cards:");
+                System.out.println();
 
                 handOfPlayer.setUpdatedDeck(DealerHand.getUpdatedDeck());
 
@@ -193,22 +195,38 @@ public class GameManager {
         }
         System.out.println();
         System.out.println();
-        System.out.println("Hand Values");
+        System.out.println("Next Phase");
         System.out.println();
         int count3 = 0;
 
         while (count3 < joining.size()) {
+
             Hand handOfPlayer = hands.get(count3);
+
             validate.validate(joining.get(count3), handOfPlayer.getuCards(), DealerHand.getdCards());
-            if(validate.getResult().equalsIgnoreCase("uWin")){
-                System.out.println("Win!!!");
+
+            if (validate.getResult().equalsIgnoreCase("uWin")) {
+
+                System.out.println();
+                System.out.println("Next Player");
+                count3++;
+
+            } else if (validate.getResult().equalsIgnoreCase("dWin")) {
+
+                System.out.println("Dealer Won with a Natural Hand, Next Round!");
+                break;
+
+            } else if (validate.getResult().equalsIgnoreCase("next")) {
+
+                validate.validateNaturalWinner(joining.get(count3), handOfPlayer.getuCards(), DealerHand.getdCards(), DealerHand.getUpdatedDeck(), joining.size(), count3);
+
+                handOfPlayer.setUpdatedDeck(validate.getCards());
+
+                handOfPlayer.setuCards(validate.getuCards());
+//                DealerHand.setUpdatedDeck(validate.getdCards());
+
+                count3++;
             }
-            validate.setResult("done");
-            validate.validateNaturalWinner(joining.get(count3), handOfPlayer.getuCards(), DealerHand.getdCards(), DealerHand.getUpdatedDeck(), joining.size(), count3);
-            handOfPlayer.setUpdatedDeck(validate.getCards());
-            handOfPlayer.setuCards(validate.getuCards());
-            handOfPlayer.setdCards(validate.getdCards());
-            count3++;
         }
 
     }
