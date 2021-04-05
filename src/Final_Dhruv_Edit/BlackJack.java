@@ -39,10 +39,9 @@ public class BlackJack {
         boolean playAgain = true;
         while (playAgain) {
             //PLacing Bets
-            
+
             gm.placingBets(players);
-            
-       
+
             //dealercards will be created first
             Deck dealerCards = new Deck();
             //Giving two cards to dealer
@@ -65,6 +64,13 @@ public class BlackJack {
                 //Giving player two cards
                 playerCards.draw(playingDeck);
                 playerCards.draw(playingDeck);
+
+                //Checking to see if player has a natural win
+                if (playerCards.cardsValue() == 21) {
+                    player.setNaturalWin(true);
+                    System.out.println("You Have A Natural Win!!!!");
+                    continue;
+                }
 
                 //while loop for hit or stand phase
                 while (true) {
@@ -116,24 +122,40 @@ public class BlackJack {
             System.out.println("Dealer Cards: " + dealerCards.toString());
 
             boolean endRoundForDealer = false;
+            boolean dealerNaturalWin = false;
 
-            //Dealer Keeps hitting until value above 16 and stands after that
-            while ((dealerCards.cardsValue() < 17) && endRoundForDealer == false) {
-                dealerCards.draw(playingDeck);
-                System.out.println();
-                System.out.println("Dealer Hits and Gets: " + dealerCards.getCard(dealerCards.deckSize() - 1).toString());
-                if ((dealerCards.cardsValue() > 21)) {
-                    endRoundForDealer = true;
+            //Checking Dealers hand for Natural Win
+            if (dealerCards.cardsValue() == 21) {
+                dealerNaturalWin = true;
+            } else {
+                //Dealer Keeps hitting until value above 16 and stands after that
+                while ((dealerCards.cardsValue() < 17) && endRoundForDealer == false) {
+                    dealerCards.draw(playingDeck);
+                    System.out.println();
+                    System.out.println("Dealer Hits and Gets: " + dealerCards.getCard(dealerCards.deckSize() - 1).toString());
+                    System.out.println();
+                    if ((dealerCards.cardsValue() > 21)) {
+                        endRoundForDealer = true;
+                    }
                 }
             }
+
             //Check to see If dealer has more points than player
             for (int i = 0; i < players.size(); i++) {
-                if ((dealerCards.cardsValue() > playersDeck.get(i).cardsValue()) && endRoundForDealer == false ) {
+                if (players.get(i).isNaturalWin() == true) {
+                    continue;
+                }
+                if ((dealerCards.cardsValue() > playersDeck.get(i).cardsValue()) && endRoundForDealer == false) {
                     System.out.println();
+                    if (dealerNaturalWin) {
+                        System.out.println("Dealer Won with a Natural Win and a hand value of " + dealerCards.cardsValue() + " compared to " + players.get(i).getName() + "'s hand value of " + playersDeck.get(i).cardsValue());
+                        players.get(i).setWallet(players.get(i).getWallet() - players.get(i).getCurrentBet());
 
-                    System.out.println("Dealer Won with a hand value of " + dealerCards.cardsValue() + " compared to " + players.get(i).getName() + "'s hand value of " + playersDeck.get(i).cardsValue());
+                    } else {
+                        System.out.println("Dealer Won with a hand value of " + dealerCards.cardsValue() + " compared to " + players.get(i).getName() + "'s hand value of " + playersDeck.get(i).cardsValue());
 
-                    players.get(i).setWallet(players.get(i).getWallet() - players.get(i).getCurrentBet());
+                        players.get(i).setWallet(players.get(i).getWallet() - players.get(i).getCurrentBet());
+                    }
                 }
 
             }
@@ -144,6 +166,9 @@ public class BlackJack {
             //Check if dealer busted and only give money to players who did not bust aswell
             if (endRoundForDealer) {
                 for (int i = 0; i < players.size(); i++) {
+                    if (players.get(i).isNaturalWin() == true) {
+                        continue;
+                    }
                     System.out.println();
                     if (playersDeck.get(i).cardsValue() < 22) {
                         System.out.println("Dealer Busts. You Win " + players.get(i).getName() + "!!!");
@@ -162,7 +187,13 @@ public class BlackJack {
 
             //Check if Tie
             for (int i = 0; i < players.size(); i++) {
+                if (players.get(i).isNaturalWin() == true && dealerNaturalWin == true) {
 
+                    System.out.println("TIE!!!!!!");
+                    System.out.println("Natural Win Tie between the Dealer and " + players.get(i).getName());
+                    System.out.println();
+
+                }
                 if ((dealerCards.cardsValue() == playersDeck.get(i).cardsValue()) && endRoundForDealer == false) {
                     System.out.println("TIE!!!!!!");
                     System.out.println("Tie between the Dealer and " + players.get(i).getName());
@@ -171,7 +202,12 @@ public class BlackJack {
 
                 //Check if Players Won
                 if ((playersDeck.get(i).cardsValue() > dealerCards.cardsValue()) && players.get(i).isEndRound() == false) {
-
+                    if (players.get(i).isNaturalWin() == true) {
+                        BalanceCalculator calculateNaturalWin = new BalanceCalculator();
+                        calculateNaturalWin.calculateNaturalWinBalance(players.get(i));
+                        System.out.println(players.get(i).getName() + " You Won With a Natural Hand!!");
+                        continue;
+                    }
                     System.out.println(players.get(i).getName() + " You Win this Hand.");
                     BalanceCalculator calculateWin = new BalanceCalculator();
                     players.get(i).setWallet(players.get(i).getWallet() + calculateWin.calculateBalance(players.get(i)));
@@ -184,6 +220,11 @@ public class BlackJack {
                     }
                     //dealer wins
                 } else if (endRoundForDealer == false && players.get(i).isEndRound() == true) {
+                    if (dealerNaturalWin == true) {
+                        System.out.println();
+                        System.out.println("Dealer Wins with a Natural Win!!!! against " + players.get(i).getName());
+                        players.get(i).setWallet(players.get(i).getWallet() - players.get(i).getCurrentBet());
+                    }
                     System.out.println();
                     System.out.println("Dealer Wins!!!! against " + players.get(i).getName());
                     players.get(i).setWallet(players.get(i).getWallet() - players.get(i).getCurrentBet());
