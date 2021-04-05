@@ -16,6 +16,7 @@ public class StandardPlayer {
     private double currentBet;
     private String name; //the unique name for this player
     private double wallet = 500;
+    private boolean endRound = false;
 
     public StandardPlayer() {
 
@@ -32,6 +33,14 @@ public class StandardPlayer {
 
     public void setWallet(double wallet) {
         this.wallet = wallet;
+    }
+
+    public boolean isEndRound() {
+        return endRound;
+    }
+
+    public void setEndRound(boolean endRound) {
+        this.endRound = endRound;
     }
 
     //For creating a dealer player and specifying the balance of the house

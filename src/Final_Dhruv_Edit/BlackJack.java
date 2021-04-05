@@ -38,6 +38,11 @@ public class BlackJack {
         //Main Game Loop
         boolean playAgain = true;
         while (playAgain) {
+            //PLacing Bets
+            
+            gm.placingBets(players);
+            
+       
             //dealercards will be created first
             Deck dealerCards = new Deck();
             //Giving two cards to dealer
@@ -85,13 +90,15 @@ public class BlackJack {
                     //if they choose to hit(1)
                     if (userAnswer == 1) {
                         playerCards.draw(playingDeck);
-                        System.out.println(player.getName() + "You drew a: " + playerCards.getCard(playerCards.deckSize() - 1).toString());
+                        System.out.println(player.getName() + " You drew a: " + playerCards.getCard(playerCards.deckSize() - 1).toString());
                         playersDeck.add(playerCards);
 
                         //Checking to see if value is now 21 after hitting
                         //if so then Player Busts
                         if (playerCards.cardsValue() > 21) {
+                            System.out.println();
                             System.out.println(player.getName() + " You Busted. Your Value is " + playerCards.cardsValue());
+                            player.setEndRound(true);
                             playersDeck.add(playerCards);
                             break;
                         }
@@ -108,17 +115,20 @@ public class BlackJack {
             System.out.println();
             System.out.println("Dealer Cards: " + dealerCards.toString());
 
-            boolean end = false;
+            boolean endRoundForDealer = false;
 
             //Dealer Keeps hitting until value above 16 and stands after that
-            while ((dealerCards.cardsValue() < 17) && end == false) {
+            while ((dealerCards.cardsValue() < 17) && endRoundForDealer == false) {
                 dealerCards.draw(playingDeck);
                 System.out.println();
                 System.out.println("Dealer Hits and Gets: " + dealerCards.getCard(dealerCards.deckSize() - 1).toString());
+                if ((dealerCards.cardsValue() > 21)) {
+                    endRoundForDealer = true;
+                }
             }
             //Check to see If dealer has more points than player
             for (int i = 0; i < players.size(); i++) {
-                if ((dealerCards.cardsValue() > playersDeck.get(i).cardsValue()) && playersDeck.get(i).cardsValue() < 22 && dealerCards.cardsValue() < 22) {
+                if ((dealerCards.cardsValue() > playersDeck.get(i).cardsValue()) && endRoundForDealer == false ) {
                     System.out.println();
 
                     System.out.println("Dealer Won with a hand value of " + dealerCards.cardsValue() + " compared to " + players.get(i).getName() + "'s hand value of " + playersDeck.get(i).cardsValue());
@@ -130,9 +140,9 @@ public class BlackJack {
 
             //Show Value Of Dealers Hand
             System.out.println("Dealer's Hand Value is " + dealerCards.cardsValue());
-            //Check if dealer busted and only give money to players who did not bust aswell
 
-            if ((dealerCards.cardsValue() > 21) && end == false) {
+            //Check if dealer busted and only give money to players who did not bust aswell
+            if (endRoundForDealer) {
                 for (int i = 0; i < players.size(); i++) {
                     System.out.println();
                     if (playersDeck.get(i).cardsValue() < 22) {
@@ -143,25 +153,24 @@ public class BlackJack {
 
                         //another way of adding money to wallet is
                         //players.get(i).setWaller(players.get(i).getWaller() + players.get(i).getCurrentBet());
-                    } else {
-                        System.out.println(players.get(i).getName() + "You Also Busted Like the Dealer " );
+                    } else if (endRoundForDealer == true && players.get(i).isEndRound() == true) {
+                        System.out.println(players.get(i).getName() + " You Also Busted Like the Dealer ");
                         players.get(i).setWallet(players.get(i).getWallet() - players.get(i).getCurrentBet());
                     }
                 }
-                end = true;
             }
 
             //Check if Tie
             for (int i = 0; i < players.size(); i++) {
 
-                if ((dealerCards.cardsValue() == playersDeck.get(i).cardsValue()) && end == false) {
+                if ((dealerCards.cardsValue() == playersDeck.get(i).cardsValue()) && endRoundForDealer == false) {
                     System.out.println("TIE!!!!!!");
                     System.out.println("Tie between the Dealer and " + players.get(i).getName());
                     System.out.println();
                 }
 
                 //Check if Players Won
-                if ((playersDeck.get(i).cardsValue() > dealerCards.cardsValue()) && end == false && playersDeck.get(i).cardsValue() < 22) {
+                if ((playersDeck.get(i).cardsValue() > dealerCards.cardsValue()) && players.get(i).isEndRound() == false) {
 
                     System.out.println(players.get(i).getName() + " You Win this Hand.");
                     BalanceCalculator calculateWin = new BalanceCalculator();
@@ -171,13 +180,13 @@ public class BlackJack {
 
                     //Once last players hand gets checked change value to true
                     if (i == players.size() - 1) {
-                        end = true;
+                        endRoundForDealer = true;
                     }
                     //dealer wins
-                } else if (end == false) {
+                } else if (endRoundForDealer == false && players.get(i).isEndRound() == true) {
                     System.out.println();
                     System.out.println("Dealer Wins!!!! against " + players.get(i).getName());
-//                    players.get(i).setWallet(players.get(i).getWallet() - players.get(i).getCurrentBet());
+                    players.get(i).setWallet(players.get(i).getWallet() - players.get(i).getCurrentBet());
                 }
 
             }

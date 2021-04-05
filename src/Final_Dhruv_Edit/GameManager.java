@@ -17,6 +17,7 @@ import java.util.Scanner;
 
 public class GameManager {
 
+    Scanner in = new Scanner(System.in);
     private ArrayList<StandardPlayer> joining = new ArrayList();
 
     public GameManager() {
@@ -52,7 +53,6 @@ public class GameManager {
     public void play() {
         //Player registration
         boolean gameStart = false;
-        Scanner in = new Scanner(System.in);
 
         do {
             System.out.println("Press ENTER to join " + joining.size() + "/4. "
@@ -119,8 +119,37 @@ public class GameManager {
         for (int i = 0; i < joining.size(); i++) {
             System.out.println(joining.get(i).toString() + " $" + joining.get(i).getWallet());
         }
+        
 
-        //Place your bets
+//        //Place your bets
+//        System.out.println("It's time to place your bets.");
+//        for (int i = 0; i < joining.size(); i++) {
+//            double toBet = 0;
+//
+//            do {
+//                try {
+//                    System.out.println(joining.get(i).getName() + " Please enter the amount you would like to bet");
+//                    toBet = in.nextDouble();
+//                    if (toBet > 0 && toBet <= joining.get(i).getWallet()) {
+//                        joining.get(i).setCurrentBet(toBet);
+//                        System.out.println("you bet $" + joining.get(i).getCurrentBet());
+//                        break;
+//                    } else {
+//                        System.out.println("Please enter a valid bet amount!");
+//                    }
+//                } catch (Exception e) {
+//
+//                    System.out.println("Please enter a valid number!");
+//                    in.next();
+//                }
+//
+//            } while (joining.get(i).getCurrentBet() <= 0);
+//
+//        }
+
+    }
+
+    public void placingBets(ArrayList<StandardPlayer> joining) {
         System.out.println("It's time to place your bets.");
         for (int i = 0; i < joining.size(); i++) {
             double toBet = 0;
@@ -145,7 +174,6 @@ public class GameManager {
             } while (joining.get(i).getCurrentBet() <= 0);
 
         }
-
     }
 
 }
