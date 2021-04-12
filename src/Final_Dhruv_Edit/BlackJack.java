@@ -37,6 +37,7 @@ public class BlackJack {
 
         //Main Game Loop
         boolean playAgain = true;
+        
         while (playAgain) {
             //PLacing Bets
 
@@ -67,6 +68,7 @@ public class BlackJack {
 
                 //Checking to see if player has a natural win
                 if (playerCards.cardsValue() == 21) {
+                    playerCards.toString();
                     player.setNaturalWin(true);
                     System.out.println("You Have A Natural Win!!!!");
                     continue;
@@ -83,7 +85,7 @@ public class BlackJack {
                     System.out.println();
 
                     //showing one of dealers cards
-                    System.out.println("Dealer's Hand: " + dealerCards.getCard(0).toString() + " and [Hidden]");
+                    System.out.println("Dealer's Hand: " + dealerCards.getCard(0).toString() + " and Hidden ");
                     System.out.println();
 
                     //hit or stand phase
