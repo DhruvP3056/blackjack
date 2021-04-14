@@ -74,6 +74,10 @@ public class GameManagerUI {
                     joining.add(aPlayer);
                 }
 
+                if (joining.size() == 4) {
+                    break;
+                }
+
                 //This command allows a user to quit the program.
             } else if (menuCommand.equalsIgnoreCase("Q")) {
 
@@ -120,7 +124,6 @@ public class GameManagerUI {
         for (int i = 0; i < joining.size(); i++) {
             System.out.println(joining.get(i).toString() + " $" + joining.get(i).getWallet());
         }
-        
 
 //        //Place your bets
 //        System.out.println("It's time to place your bets.");
@@ -147,7 +150,6 @@ public class GameManagerUI {
 //            } while (joining.get(i).getCurrentBet() <= 0);
 //
 //        }
-
     }
 
     public void placingBets(ArrayList<StandardPlayer> joining) {

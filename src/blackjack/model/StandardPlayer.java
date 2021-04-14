@@ -18,6 +18,7 @@ public class StandardPlayer {
     private double wallet = 500;
     private boolean endRound = false;
     private boolean naturalWin = false;
+    private boolean tie = false;
 
     public StandardPlayer() {
 
@@ -52,6 +53,14 @@ public class StandardPlayer {
         return endRound;
     }
 
+    public boolean isTie() {
+        return tie;
+    }
+
+    public void setTie(boolean tie) {
+        this.tie = tie;
+    }
+    
 
 
     //For creating a dealer player and specifying the balance of the house
