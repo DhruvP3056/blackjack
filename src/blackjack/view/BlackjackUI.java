@@ -21,6 +21,7 @@ public class BlackjackUI {
     private static boolean endRoundForDealer = false;
     private static boolean dealerNaturalWin = false;
 
+
     public BlackjackUI() {
         input = new Scanner(System.in);
     }
