@@ -83,15 +83,15 @@ public class BlackJack {
 
             blackjackView.showDealersCards(dealerCards);
 
-            blackjackView.didDealerWin(playingDeck, dealerCards, playersDeck);
+            blackjackView.DealersTurnToHit(dealerCards, playingDeck);
 
             blackjackView.showDealersHandValue(dealerCards);
 
-            blackjackView.isBusted(dealerCards, playersDeck);
+            blackjackView.isDealerBusted();
 
             blackjackView.tieChecker(dealerCards, playersDeck, players);
 
-            blackjackView.winChecker(dealerCards, playersDeck);
+            blackjackView.winChecker(dealerCards, playersDeck, players);
 
             blackjackView.moneyUpdate(players);
 
