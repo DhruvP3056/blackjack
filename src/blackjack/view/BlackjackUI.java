@@ -6,9 +6,11 @@
 package blackjack.view;
 
 import blackjack.BalanceCalculator;
+import blackjack.model.Card;
 import blackjack.model.Deck;
 import blackjack.model.HandValueCalculator;
 import blackjack.model.StandardPlayer;
+import blackjack.model.Value;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -46,7 +48,9 @@ public class BlackjackUI {
             if (valueCalculator.cardsValue(playerCards.getCards()) == 21) {
                 player.setNaturalWin(true);
                 System.out.println();
-                playerCards.toString();
+                
+                System.out.println(playerCards.toString());
+                
                 System.out.println();
                 System.out.println("You Have A Natural Win!!!!");
                 continue;
@@ -57,7 +61,8 @@ public class BlackjackUI {
                 //Show Player Cards
                 System.out.println(player.getName() + " Your Hand: " + playerCards.toString());
                 System.out.println();
-
+                //Check for Joker in hand
+                checkForJoker(playerCards);
                 //getting User hand values
                 System.out.println(player.getName() + ": The Value of Your Cards is: " + valueCalculator.cardsValue(playerCards.getCards()));
                 System.out.println();
@@ -68,36 +73,60 @@ public class BlackjackUI {
 
                 //hit or stand phase
                 System.out.println();
-
-                System.out.println("Would you like to Hit or Stand?.....1 or Hit.....2 for Stand");
-
-                int userAnswer = input.nextInt();
-
-                //if they choose to hit(1)
-                if (userAnswer == 1) {
-                    playerCards.draw(playingDeck);
-                    System.out.println(player.getName() + " You drew a: " + playerCards.getCard(playerCards.deckSize() - 1).toString());
-                    //Checking to see if value is now 21 after hitting
-                    //if so then Player Busts
-                    if (valueCalculator.cardsValue(playerCards.getCards()) > 21) {
-                        System.out.println();
-                        System.out.println(player.getName() + " You Busted. Your Value is " + valueCalculator.cardsValue(playerCards.getCards()));
-                        player.setEndRound(true);
-                        playersDeck.add(playerCards);
+                //check if player busted if they got a joker
+                if (valueCalculator.cardsValue(playerCards.getCards()) > 21) {
+                    System.out.println();
+                    System.out.println(player.getName() + " You Busted. Your Value is " + valueCalculator.cardsValue(playerCards.getCards()));
+                    player.setEndRound(true);
+                    playersDeck.add(playerCards);
 //                        playersDeck.trimToSize();
+                    break;
+                } else {
+                    System.out.println("Would you like to Hit or Stand?.....1 or Hit.....2 for Stand");
+
+                    int userAnswer = input.nextInt();
+
+                    //if they choose to hit(1)
+                    if (userAnswer == 1) {
+                        playerCards.draw(playingDeck);
+
+                        System.out.println(player.getName() + " You drew a: " + playerCards.getCard(playerCards.deckSize() - 1).toString());
+                        System.out.println();
+                        checkForJoker(playerCards);
+                        //Checking to see if value is now 21 after hitting
+                        //if so then Player Busts
+                        if (valueCalculator.cardsValue(playerCards.getCards()) > 21) {
+                            System.out.println();
+                            System.out.println(player.getName() + " You Busted. Your Value is " + valueCalculator.cardsValue(playerCards.getCards()));
+                            player.setEndRound(true);
+                            playersDeck.add(playerCards);
+//                        playersDeck.trimToSize();
+                            break;
+                        }
+                    }
+                    //If they Choose Stand(2)
+                    if (userAnswer == 2) {
+                        playersDeck.add(playerCards);
+//                    playersDeck.trimToSize();
                         break;
                     }
-                }
-                //If they Choose Stand(2)
-                if (userAnswer == 2) {
-                    playersDeck.add(playerCards);
-//                    playersDeck.trimToSize();
-                    break;
                 }
             }
         }
 //        playersDeck.trimToSize();
 
+    }
+
+    public void checkForJoker(Deck playerCard) {
+        //if player has joker in hand
+        valueCalculator.cardsValue(playerCard.getCards());
+        for (Card jokerValue : playerCard.getCards()) {
+            if (jokerValue.getValue() == Value.JOKER) {
+                System.out.print("You Have A Joker In Your Hand That Has A Value Of: ");
+                System.out.println(valueCalculator.getValOfJoker());
+            }
+
+        }
     }
 
     public void showDealersCards(Deck dealerCards) {
@@ -145,9 +174,8 @@ public class BlackjackUI {
 
     public void tieChecker(Deck dealerCards, ArrayList<Deck> playersDeck, ArrayList<StandardPlayer> players) {
 
-        System.out.println("DEBUG: " + players.size());
 
-        for (int i = 0; i < players.size()-1; i++) {
+        for (int i = 0; i < players.size() - 1; i++) {
 
             if ((valueCalculator.cardsValue(playersDeck.get(i).getCards()) == valueCalculator.cardsValue(dealerCards.getCards()))) {
 

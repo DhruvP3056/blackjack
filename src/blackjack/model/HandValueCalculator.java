@@ -9,30 +9,41 @@ import java.util.ArrayList;
 
 /**
  * NOTE: NOT IMPLEMENTED, BUT WOULD LIKE TO ***
- * 
+ *
  * @author Amanda Jose, 2021
  * @author Vigneshwar Premachandran
  */
 public class HandValueCalculator {
-    
+
     private static HandValueCalculator instance = null;
-    
-    private HandValueCalculator(){     
+    private int valOfJoker = 0;
+
+    private HandValueCalculator() {
     }
-    
-    public static HandValueCalculator getInstance(){
-        if(instance == null){
+
+    public int getValOfJoker() {
+        return valOfJoker;
+    }
+
+    public static HandValueCalculator getInstance() {
+        if (instance == null) {
             instance = new HandValueCalculator();
         }
         return instance;
     }
+
     //Calculate the value of the hand
     public int cardsValue(ArrayList<Card> cards) {
         int totalValue = 0;
+
         int aces = 0;
         //For each card in the deck
         for (Card card : cards) {
             switch (card.getValue()) {
+                case JOKER:
+                    valOfJoker = 1000;
+                    totalValue += valOfJoker;
+                    break;
                 case ACE:
                     aces += 1;
                     break;
@@ -73,21 +84,21 @@ public class HandValueCalculator {
                     totalValue += 10;
                     break;
             }
-            
+
         }
-        
+
         //Now checking how many aces are there and adding points accordingly
         //aces are worth 1 or 11
         //If there is ace but hand value is above 10 then 11 points will be added 
         //if the hand value is greater than 10, then 1 will be added
-        for(int i=0;i < aces;i++){
-            if(totalValue > 10){
+        for (int i = 0; i < aces; i++) {
+            if (totalValue > 10) {
                 totalValue += 1;
-            }else {
+            } else {
                 totalValue += 11;
             }
         }
-        
+
         return totalValue;
-    }    
+    }
 }
