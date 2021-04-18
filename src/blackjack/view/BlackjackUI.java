@@ -7,6 +7,7 @@ package blackjack.view;
 import blackjack.BalanceCalculator;
 import static blackjack.BlackJack.players;
 import blackjack.model.Deck;
+import blackjack.model.HandValueCalculator;
 import blackjack.model.StandardPlayer;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,6 +21,7 @@ public class BlackjackUI {
     Scanner input;
     private boolean endRoundForDealer = false;
     private boolean dealerNaturalWin = false;
+    HandValueCalculator valueCalculator = HandValueCalculator.getInstance();
     
     public BlackjackUI(){
         input = new Scanner(System.in);
