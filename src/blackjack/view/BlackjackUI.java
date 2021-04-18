@@ -8,7 +8,7 @@ package blackjack.view;
 import blackjack.BalanceCalculator;
 import blackjack.model.Card;
 import blackjack.model.Deck;
-import blackjack.model.HandValueCalculator;
+import blackjack.HandValueCalculator;
 import blackjack.model.StandardPlayer;
 import blackjack.model.Value;
 import java.util.ArrayList;
