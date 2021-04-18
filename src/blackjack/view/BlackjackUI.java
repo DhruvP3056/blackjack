@@ -1,4 +1,3 @@
-
 package blackjack.view;
 
 import blackjack.BalanceCalculator;
@@ -14,9 +13,7 @@ import java.util.Scanner;
  * @author Amanda Jose, 2021
  * @author Vigneshwar Premachandran, 2021
  * @author Dhruv Patel, 2021
- * @author Zain Qureshi, 2021
- * Project: Deliverable 3
- * 2021-04-18
+ * @author Zain Qureshi, 2021 Project: Deliverable 3 2021-04-18
  */
 public class BlackjackUI {
 
@@ -43,9 +40,9 @@ public class BlackjackUI {
             if (valueCalculator.cardsValue(playerCards.getCards()) == 21) {
                 player.setNaturalWin(true);
                 System.out.println();
-                
+
                 System.out.println(playerCards.toString());
-                
+
                 System.out.println();
                 System.out.println("You Have A Natural Win!!!!");
                 continue;
@@ -74,7 +71,6 @@ public class BlackjackUI {
                     System.out.println(player.getName() + " You Busted. Your Value is " + valueCalculator.cardsValue(playerCards.getCards()));
                     player.setEndRound(true);
                     playersDeck.add(playerCards);
-//                        playersDeck.trimToSize();
                     break;
                 } else {
                     System.out.println("Would you like to Hit or Stand?.....1 for Hit.....2 for Stand");
@@ -83,6 +79,7 @@ public class BlackjackUI {
 
                     //if they choose to hit(1)
                     if (userAnswer == 1) {
+
                         playerCards.draw(playingDeck);
 
                         System.out.println(player.getName() + " You drew a: " + playerCards.getCard(playerCards.deckSize() - 1).toString());
@@ -117,7 +114,7 @@ public class BlackjackUI {
         valueCalculator.cardsValue(playerCard.getCards());
         for (Card jokerValue : playerCard.getCards()) {
             if (jokerValue.getValue() == Value.JOKER) {
-                System.out.print("You Have A Joker In Your Hand That Has A Value Of: ");
+                System.out.print(jokerValue.toString() + ": You Have A Joker In Your Hand That Has A Value Of: ");
                 System.out.println(valueCalculator.getValOfJoker());
             }
 
@@ -134,6 +131,10 @@ public class BlackjackUI {
         if (valueCalculator.cardsValue(dealerCards.getCards()) == 21) {
             dealerNaturalWin = true;
         } else {
+            //if dealer has joker end turn
+            if ((valueCalculator.cardsValue(dealerCards.getCards()) > 21)) {
+                endRoundForDealer = true;
+            }
             //Dealer Keeps hitting until value above 16 and stands after that
             while ((valueCalculator.cardsValue(dealerCards.getCards()) < 17) && endRoundForDealer == false) {
                 dealerCards.draw(playingDeck);
@@ -168,7 +169,6 @@ public class BlackjackUI {
     }
 
     public void tieChecker(Deck dealerCards, ArrayList<Deck> playersDeck, ArrayList<StandardPlayer> players) {
-
 
         for (int i = 0; i < players.size() - 1; i++) {
 
@@ -228,10 +228,10 @@ public class BlackjackUI {
                 //if player wins
                 playerWins(players.get(i));
 
-                if (i == players.size() - 1) {
-                    endRoundForDealer = true;
-                }
-                //if dealer busts
+//                if (i == players.size()) {
+//                    endRoundForDealer = true;
+//                }
+//                if dealer busts
             } else if ((endRoundForDealer)) {
                 System.out.println();
 
@@ -292,6 +292,17 @@ public class BlackjackUI {
         }
     }
 
+    public void removePlayer(ArrayList<StandardPlayer> players) {
+
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getWallet() == 0) {
+                System.out.println(players.get(i).getName() + " You Ran Out Of Money!!!!!!");
+                System.out.println(players.get(i).getName() + " You LOST!!!!!, You will be removed from the game.");
+                players.remove(i);
+            }
+        }
+    }
+
     public void moneyUpdate(ArrayList<StandardPlayer> players) {
         for (StandardPlayer player : players) {
             System.out.println("\nNew Balance for " + player.getName() + " is ");
@@ -306,7 +317,7 @@ public class BlackjackUI {
             playingDeck.createDeck();
             playingDeck.shuffle();
         }
-        System.out.println("Play Again?");
+        System.out.println("Play Again? Enter \"Yes\" or \"No\"");
         String userChoice = input.next();
         return userChoice.equals("yes");
     }

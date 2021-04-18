@@ -66,7 +66,9 @@ public class BlackJack {
 
         //Main Game Loop
         do {
-
+            //checking if players have a balance of $0
+            blackjackView.removePlayer(players);
+            //allowing players to bet
             gm.placingBets(players);
 
             //dealercards will be created first
