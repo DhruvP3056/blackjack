@@ -185,7 +185,7 @@ public class GameManagerUI {
                     in.next();
                 }
 
-            } while (players.get(i).getCurrentBet() <= 0);
+            } while ((players.get(i).getCurrentBet() <= players.get(i).getWallet()));
 
         }
     }

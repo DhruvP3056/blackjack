@@ -43,7 +43,7 @@ public class BlackjackUI {
             playerCards.draw(playingDeck);
 
             //Checking to see if player has a natural win
-            if (playerCards.cardsValue() == 21) {
+            if (valueCalculator.cardsValue(playerCards.getCards()) == 21) {
                 player.setNaturalWin(true);
                 System.out.println();
                 playerCards.toString();
@@ -59,7 +59,7 @@ public class BlackjackUI {
                 System.out.println();
 
                 //getting User hand values
-                System.out.println(player.getName() + ": The Value of Your Cards is: " + playerCards.cardsValue());
+                System.out.println(player.getName() + ": The Value of Your Cards is: " + valueCalculator.cardsValue(playerCards.getCards()));
                 System.out.println();
 
                 //showing one of dealers cards
@@ -79,9 +79,9 @@ public class BlackjackUI {
                     System.out.println(player.getName() + " You drew a: " + playerCards.getCard(playerCards.deckSize() - 1).toString());
                     //Checking to see if value is now 21 after hitting
                     //if so then Player Busts
-                    if (playerCards.cardsValue() > 21) {
+                    if (valueCalculator.cardsValue(playerCards.getCards()) > 21) {
                         System.out.println();
-                        System.out.println(player.getName() + " You Busted. Your Value is " + playerCards.cardsValue());
+                        System.out.println(player.getName() + " You Busted. Your Value is " + valueCalculator.cardsValue(playerCards.getCards()));
                         player.setEndRound(true);
                         playersDeck.add(playerCards);
 //                        playersDeck.trimToSize();
@@ -107,17 +107,17 @@ public class BlackjackUI {
     public void DealersTurnToHit(Deck dealerCards, Deck playingDeck) {
 
         //Checking Dealers hand for Natural Win
-        if (dealerCards.cardsValue() == 21) {
+        if (valueCalculator.cardsValue(dealerCards.getCards()) == 21) {
             dealerNaturalWin = true;
         } else {
             //Dealer Keeps hitting until value above 16 and stands after that
-            while ((dealerCards.cardsValue() < 17) && endRoundForDealer == false) {
+            while ((valueCalculator.cardsValue(dealerCards.getCards()) < 17) && endRoundForDealer == false) {
                 dealerCards.draw(playingDeck);
                 System.out.println();
                 System.out.println("Dealer Hits and Gets: " + dealerCards.getCard(dealerCards.deckSize() - 1).toString());
                 System.out.println();
                 dealerCards.toString();
-                if ((dealerCards.cardsValue() > 21)) {
+                if ((valueCalculator.cardsValue(dealerCards.getCards()) > 21)) {
                     endRoundForDealer = true;
                 }
             }
@@ -126,7 +126,7 @@ public class BlackjackUI {
 
     public void showDealersHandValue(Deck dealerCards) {
 
-        System.out.println("Dealer's Hand Value is " + dealerCards.cardsValue());
+        System.out.println("Dealer's Hand Value is " + (valueCalculator.cardsValue(dealerCards.getCards())));
 
     }
 
@@ -144,28 +144,16 @@ public class BlackjackUI {
     }
 
     public void tieChecker(Deck dealerCards, ArrayList<Deck> playersDeck, ArrayList<StandardPlayer> players) {
-//        playersDeck.forEach(deck -> {
-//            if (deck.cardsValue() == dealerCards.cardsValue()) {
-//                System.out.println(deck);
-//                System.out.println("Players card value is" + deck.cardsValue());
-//
-//            } else {
-//                System.out.println(deck);
-//                System.out.println("Players card value is" + deck.cardsValue());
-//
-//            }
-//        });
-        for (int i = 0; i < players.size(); i++) {
 
-            if (playersDeck.get(i).cardsValue() == dealerCards.cardsValue()) {
-//                System.out.println(playersDeck.get(i));
-//                System.out.println("Players card value is" + playersDeck.get(i).cardsValue() + " " + i);
+        System.out.println("DEBUG: " + players.size());
+
+        for (int i = 0; i < players.size()-1; i++) {
+
+            if ((valueCalculator.cardsValue(playersDeck.get(i).getCards()) == valueCalculator.cardsValue(dealerCards.getCards()))) {
+
                 players.get(i).setTie(true);
 
             } else {
-//                System.out.println(playersDeck.get(i));
-//
-//                System.out.println("Players card value is" + playersDeck.get(i).cardsValue() + " " + i);
 
                 players.get(i).setTie(false);
 
@@ -181,8 +169,8 @@ public class BlackjackUI {
             System.out.println("\n------------------------------\n");
 
             System.out.println("Checking Player " + (i + 1) + "'s Cards\n");
-            System.out.println("This Is The Value Of Your Hand: " + playersDeck.get(i).cardsValue());
-            System.out.println("This Is The Dealer's Hand Value: " + dealerCards.cardsValue());
+            System.out.println("This Is The Value Of Your Hand: " + (valueCalculator.cardsValue(playersDeck.get(i).getCards())));
+            System.out.println("This Is The Dealer's Hand Value: " + valueCalculator.cardsValue(dealerCards.getCards()));
 
             //checking if player busted
             if (players.get(i).isEndRound()) {
@@ -210,7 +198,7 @@ public class BlackjackUI {
                 System.out.println(players.get(i).getName() + " You Won With a Natural Hand!!");
 
                 //Players beats the dealer
-            } else if (!(endRoundForDealer) && !(playersDeck.get(i).cardsValue() < dealerCards.cardsValue()) && !(players.get(i).isEndRound())) {
+            } else if (!(endRoundForDealer) && !((valueCalculator.cardsValue(playersDeck.get(i).getCards())) < valueCalculator.cardsValue(dealerCards.getCards())) && !(players.get(i).isEndRound())) {
                 System.out.println(players.get(i).getName());
                 System.out.println();
 
@@ -235,17 +223,13 @@ public class BlackjackUI {
                 }
 
                 //dealer wins
-            } else if (!(endRoundForDealer) && (playersDeck.get(i).cardsValue() < dealerCards.cardsValue())) {
+            } else if (!(endRoundForDealer) && ((valueCalculator.cardsValue(playersDeck.get(i).getCards())) < valueCalculator.cardsValue(dealerCards.getCards()))) {
 
                 dealerWins(players.get(i), playersDeck.get(i), dealerCards);
             }
             System.out.println("Done Checking Player " + (i + 1) + "'s Cards. Next Player");
             System.out.println("\n------------------------------\n");
         }
-    }
-
-    public void tieChecker() {
-
     }
 
     public void playerBusts(StandardPlayer player, Deck playersDeck) {

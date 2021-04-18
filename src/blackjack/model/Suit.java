@@ -10,5 +10,5 @@ package blackjack.model;
  * @author dhruvpatel
  */
 public enum Suit {
-        Heart, SPADE, DIAMOND, CLUB
+        HEART, SPADE, DIAMOND, CLUB
 }
