@@ -18,17 +18,13 @@ import java.util.Scanner;
 
 public class GameManagerUI {
 
-    Scanner in = new Scanner(System.in);
-    private ArrayList<StandardPlayer> joining = new ArrayList();
+    Scanner in; 
 
     public GameManagerUI() {
-
+        in = new Scanner(System.in);
     }
 
-    public ArrayList<StandardPlayer> getJoining() {
-        return joining;
-    }
-
+    //-----------------------Utility Methods-----------------------------------
     //This method checks the Array of players and returns the player object corresponding to the passed name.
     public StandardPlayer getPlayerObject(ArrayList<StandardPlayer> players, String nameToCheck) {
         StandardPlayer temp = new StandardPlayer();
@@ -51,117 +47,134 @@ public class GameManagerUI {
         return matchFound > 0;
     }
 
-    public void play() {
-        //Player registration
-        boolean gameStart = false;
+//--------------------------------------VIEW METHODS-----------------------------------------------------
+    public String mainMenu(ArrayList<StandardPlayer> players) {
 
-        do {
-            System.out.println("Press ENTER to join " + joining.size() + "/4. "
-                    + "Enter you NAME to leave the game. Enter \"Q\" to quit the game. "
-                    + "Enter \"START\" to start the round.");
-            String menuCommand = in.nextLine();
+        //Main options
+        System.out.println("Press \"ENTER\" to Join. " + players.size() + "/4 players in lobby.");
+        System.out.println("Enter your \"NAME\" to leave the game.");
+        System.out.println("Enter \"Q\" to quit the game.");
+        System.out.println("Enter \"START\" to start the round.");
 
-            //This command allows a player to join the game.
-            if (menuCommand.equalsIgnoreCase("")) {
-                StandardPlayer aPlayer = new StandardPlayer();
-                System.out.println("Enter player name");
-                String playerName = in.nextLine();
-                if (playerName.equalsIgnoreCase("") || playerName.equalsIgnoreCase("start")) {
-                    System.out.println("Please enter a valid name!");
-                } else {
-                    System.out.println(playerName + " has entered the game.");
-                    aPlayer.setName(playerName);
-                    joining.add(aPlayer);
-                }
+        //This is the main user input
+        String menuCommand = in.nextLine();
 
-                //This command allows a user to quit the program.
-            } else if (menuCommand.equalsIgnoreCase("Q")) {
-
-                if (joining.size() == 0) {
-                    do {
-                        System.out.println("If you would like to quit the game, enter \"YES\"."
-                                + "If you would like to go back press any button.");
-                        if (in.nextLine().equalsIgnoreCase("YES")) {
-                            System.out.println("Have a good day!");
-                            exit(0);
-                        } else {
-                            break;
-                        }
-                    } while (joining.size() == 0);
-                } else {
-                    System.out.println("There are still " + joining.size() + " players in the game.");
-                    System.out.println("Do you still want to quit? Enter \"YES\" to quit or press any button to return to the menu.");
-                    if (in.nextLine().equalsIgnoreCase("YES")) {
-                        System.out.println("Have a good day!");
-                        exit(0);
-                    }
-                }
-
-                //Use this command to allow a player to quit the game.    
-            } else if (doesPlayerExist(joining, menuCommand)) {
-
-                System.out.println(getPlayerObject(joining, menuCommand).getName() + " has left the game.");
-                joining.remove(getPlayerObject(joining, menuCommand));
-
-            } else if (menuCommand.equalsIgnoreCase("listPlayers")) {
-                for (int i = 0; i < joining.size(); i++) {
-                    System.out.println(joining.get(i).getName());
-                }
-            } else if (menuCommand.equalsIgnoreCase("start")) {
-                gameStart = true;
-            }
-
-            //For testing
-//            break;
-        } while (gameStart == false);
-
-        //Showing player balance
-        System.out.println("The game is about to begin. Here is your Balance...");
-        for (int i = 0; i < joining.size(); i++) {
-            System.out.println(joining.get(i).toString() + " $" + joining.get(i).getWallet());
-        }
-        
-
-//        //Place your bets
-//        System.out.println("It's time to place your bets.");
-//        for (int i = 0; i < joining.size(); i++) {
-//            double toBet = 0;
-//
-//            do {
-//                try {
-//                    System.out.println(joining.get(i).getName() + " Please enter the amount you would like to bet");
-//                    toBet = in.nextDouble();
-//                    if (toBet > 0 && toBet <= joining.get(i).getWallet()) {
-//                        joining.get(i).setCurrentBet(toBet);
-//                        System.out.println("you bet $" + joining.get(i).getCurrentBet());
-//                        break;
-//                    } else {
-//                        System.out.println("Please enter a valid bet amount!");
-//                    }
-//                } catch (Exception e) {
-//
-//                    System.out.println("Please enter a valid number!");
-//                    in.next();
-//                }
-//
-//            } while (joining.get(i).getCurrentBet() <= 0);
-//
-//        }
-
+        return menuCommand;
     }
 
-    public void placingBets(ArrayList<StandardPlayer> joining) {
+    public StandardPlayer getPlayerRegistration() {
+        StandardPlayer newPlayer = new StandardPlayer();
+        String playerName;
+        
+        do{
+        System.out.println("Enter player name");
+        playerName = in.nextLine();
+
+        if (playerName.equalsIgnoreCase("") || playerName.equalsIgnoreCase("start")) {
+
+            System.out.println("Please enter a valid name!");
+
+        } else {
+            System.out.println(playerName + " has entered the game.");
+            newPlayer.setName(playerName);
+        }
+        }while(playerName.equalsIgnoreCase("") || playerName.equalsIgnoreCase("start"));
+
+        return newPlayer;
+    }
+
+    public void quitGame(ArrayList<StandardPlayer> players) {
+        if (players.size() == 0) {
+
+            System.out.println("Are you sure you want to quit?");
+            System.out.println("Enter \"YES\" to quit");
+            System.out.println("If you would like to go back press \"ENTER\".");
+
+            if (in.nextLine().equalsIgnoreCase("YES")) {
+                System.out.println("Have a good day!");
+                exit(0);
+            }
+
+        } else {
+            System.out.println("There are still " + players.size() + " players in the game.");
+
+            System.out.println("Are you sure you want to quit?");
+            System.out.println("Enter \"YES\" to quit");
+            System.out.println("If you would like to go back press \"ENTER\".");
+
+            if (in.nextLine().equalsIgnoreCase("YES")) {
+                System.out.println("Have a good day!");
+                exit(0);
+            }
+        }
+    }
+
+    public void showAllPlayerBalance(ArrayList<StandardPlayer> players) {
+        System.out.println("Now showing balance for all players:");
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println(players.get(i).toString() + " $" + players.get(i).getWallet());
+        }
+    }
+
+    public void tutorial(){
+        System.out.println("Welcome to Super BlackJack!!!");
+        int option = 2;
+        
+        do{
+        try{  
+            System.out.println("Enter \"1\" to view the tutorial, or \"0\" to begin the game.");
+            option = in.nextInt();
+            
+            if(option == 1){
+                System.out.println("---Basic Rules---");
+                System.out.println("BlackJack is a game where the players face the dealer, as opposed to each other.\n"
+                        + "Number cards have point values equal to their numbers, face cards have a value of 10, \n"
+                        + "and Aces have a value of 1 or 11. The goal of the game is to have a hand value close to or \n"
+                        + "exactly 21 points without exceeding 21.");
+                System.out.println("");
+                System.out.println("---How the Game Runs---");
+                System.out.println("All players including the dealer will first be dealt 1 card face up. Next, all players except the\n"
+                        + "dealer will be dealt 1 card face up. The dealer is also dealt the second card but it is not face up. Once\n"
+                        + "two cards have been dealt, the dealer will ask each player to \"hit\" or \"stand\", where hit means to be dealt\n"
+                        + "a card and stand means to pass. Players will hit until they are satisfied with their hand value or exceed 21 points.\n"
+                        + "Once all players, including the dealer have gone through this process, the dealer will compare the value of their\n"
+                        + "hand with each player. If the player has a hand value greater than the dealer, they win. If the dealer has more points\n"
+                        + "than the player, the dealer wins. If both sides have the same points, the round is tied. Players who have a value of \n"
+                        + "21 points in their hand automatically win on their turn.");
+                System.out.println("");
+                System.out.println("---Super BlackJack Rules---");
+                System.out.println("In Super BlackJack there are two additional cards in the deck, a pair of jokers. When drawn, the joker comes into\n"
+                        + "play as a copy of another card in the players hand, except under two conditions. If the player's hand is empty, the Joker's\n"
+                        + "value is 1. If the player already has a Joker in their hand, they bust automatically. The player is allowed to choose\n"
+                        + "which card in their hand the joker becomes.");
+                System.out.println("---End of Tutorial---");
+                System.out.println("");
+                System.out.println("");
+                break;
+            }else if(option == 0){
+                System.out.println("---Initiallizing Player Registration---");
+                break;
+            }
+        }catch(Exception e){
+            in.next();
+        }
+        }while(option != 1 || option != 0);
+    }
+    
+    //Placing bets
+    public void placingBets(ArrayList<StandardPlayer> players) {
         System.out.println("It's time to place your bets.");
-        for (int i = 0; i < joining.size(); i++) {
+        for (int i = 0; i < players.size(); i++) {
+            
             double toBet = 0;
 
             do {
                 try {
-                    System.out.println(joining.get(i).getName() + " Please enter the amount you would like to bet");
+                    System.out.println(players.get(i).getName() + " Please enter the amount you would like to bet");
                     toBet = in.nextDouble();
-                    if (toBet > 0 && toBet <= joining.get(i).getWallet()) {
-                        joining.get(i).setCurrentBet(toBet);
-                        System.out.println("you bet $" + joining.get(i).getCurrentBet());
+                    if (toBet > 0 && toBet <= players.get(i).getWallet()) {
+                        players.get(i).setCurrentBet(toBet);
+                        System.out.println("you bet $" + players.get(i).getCurrentBet());
                         break;
                     } else {
                         System.out.println("Please enter a valid bet amount!");
@@ -172,7 +185,7 @@ public class GameManagerUI {
                     in.next();
                 }
 
-            } while (joining.get(i).getCurrentBet() <= 0);
+            } while (players.get(i).getCurrentBet() <= 0);
 
         }
     }
