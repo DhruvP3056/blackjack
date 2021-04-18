@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package blackjack.model;
 
-import blackjack.model.Card;
-import blackjack.model.Value;
-import blackjack.model.Suit;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -18,9 +11,12 @@ It can be used as the main deck or the players hand
 It is adaptable to the programmers liking
  */
 /**
- *
- * @author dhruvpatel
- * @author Amanda Jose, 2021
+  * @author Amanda Jose, 2021
+ * @author Vigneshwar Premachandran, 2021
+ * @Dhruv Patel, 2021
+ * @Zain Qureshi, 2021
+ * Project: Deliverable 3
+ * 2021-04-08
  */
 public class Deck {
     

@@ -1,16 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package blackjack;
 
 import blackjack.model.StandardPlayer;
 
 /**
- *
  * @author Amanda Jose, 2021
- * @author dhruvpatel
+ * @author Vigneshwar Premachandran, 2021
+ * @Dhruv Patel, 2021
+ * @Zain Qureshi
+ * Project: Deliverable 3
+ * 2021-04-08
  */
 public class BalanceCalculator {
 

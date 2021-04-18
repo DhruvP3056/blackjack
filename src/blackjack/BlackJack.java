@@ -1,16 +1,17 @@
 package blackjack;
 
 /**
- *
- * @author dhruvpatel
  * @author Amanda Jose, 2021
  * @author Vigneshwar Premachandran, 2021
+ * @Dhruv Patel, 2021
+ * @Zain Qureshi
+ * Project: Deliverable 3
+ * 2021-04-08
  */
 import blackjack.view.GameManagerUI;
 import blackjack.model.StandardPlayer;
 import blackjack.model.Deck;
 import blackjack.view.BlackjackUI;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class BlackJack {
@@ -20,8 +21,6 @@ public class BlackJack {
     public static void main(String[] args) {
 
         BlackjackUI blackjackView = new BlackjackUI();
-
-        blackjackView.startMessage();
 
         //------------GameManager Controller Code---------------
         

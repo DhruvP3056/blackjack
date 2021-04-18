@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package blackjack.view;
 
 import blackjack.BalanceCalculator;
@@ -17,6 +13,11 @@ import java.util.Scanner;
 /**
  *
  * @author Amanda Jose, 2021
+ * @author Vigneshwar Premachandran, 2021
+ * @Dhruv Patel, 2021
+ * @Zain Qureshi
+ * Project: Deliverable 3
+ * 2021-04-08
  */
 public class BlackjackUI {
 
@@ -27,11 +28,6 @@ public class BlackjackUI {
 
     public BlackjackUI() {
         input = new Scanner(System.in);
-    }
-
-    public void startMessage() {
-        System.out.println("Welcome to BlackJack!!!");
-        System.out.println();
     }
 
     public void startGame(ArrayList<StandardPlayer> players, Deck playingDeck, Deck dealerCards, ArrayList<Deck> playersDeck) {
@@ -82,7 +78,7 @@ public class BlackjackUI {
 //                        playersDeck.trimToSize();
                     break;
                 } else {
-                    System.out.println("Would you like to Hit or Stand?.....1 or Hit.....2 for Stand");
+                    System.out.println("Would you like to Hit or Stand?.....1 for Hit.....2 for Stand");
 
                     int userAnswer = input.nextInt();
 
