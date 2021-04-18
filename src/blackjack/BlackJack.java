@@ -4,6 +4,7 @@ package blackjack;
  *
  * @author dhruvpatel
  * @author Amanda Jose, 2021
+ * @author Vigneshwar Premachandran, 2021
  */
 import blackjack.view.GameManagerUI;
 import blackjack.model.StandardPlayer;
@@ -19,13 +20,43 @@ public class BlackJack {
     public static void main(String[] args) {
 
         BlackjackUI blackjackView = new BlackjackUI();
-        
-        blackjackView.startMessage();
-        
-        GameManagerUI gm = new GameManagerUI();
-        gm.play();
 
-        players = gm.getJoining();
+        blackjackView.startMessage();
+
+        //------------GameManager Controller Code---------------
+        
+        boolean stillJoining = true;
+        GameManagerUI gm = new GameManagerUI();
+
+        //Tutorial
+        gm.tutorial();
+        
+        //Game Menu
+        do {
+            
+            String command = gm.mainMenu(players);
+            if (command.equalsIgnoreCase("")) {
+
+                players.add(gm.getPlayerRegistration());
+
+            } else if (command.equalsIgnoreCase("Q")) {
+
+                gm.quitGame(players);
+
+            } else if (gm.doesPlayerExist(players, command)) {
+
+                players.remove(gm.getPlayerObject(players, command));
+
+            } else if (command.equalsIgnoreCase("start")) {
+                stillJoining = false;
+            }
+            
+            if(players.size() >= 4){
+                stillJoining = false;
+            }
+        } while (stillJoining == true);
+
+        gm.showAllPlayerBalance(players);
 
         //Creating Main Deck
         Deck playingDeck = new Deck();
@@ -35,8 +66,7 @@ public class BlackJack {
         playingDeck.shuffle();
 
         //Main Game Loop
-
-        do{
+        do {
 
             gm.placingBets(players);
 
@@ -50,22 +80,22 @@ public class BlackJack {
             ArrayList<Deck> playersDeck = new ArrayList();
 
             blackjackView.startGame(players, playingDeck, dealerCards, playersDeck);
-            
+
             blackjackView.showDealersCards(dealerCards);
 
             blackjackView.didDealerWin(playingDeck, dealerCards, playersDeck);
-            
+
             blackjackView.showDealersHandValue(dealerCards);
-            
+
             blackjackView.isBusted(dealerCards, playersDeck);
-            
+
             blackjackView.tieChecker(dealerCards, playersDeck, players);
-            
+
             blackjackView.winChecker(dealerCards, playersDeck);
-            
+
             blackjackView.moneyUpdate(players);
-            
-        }while(blackjackView.newRound(playingDeck));
-        
+
+        } while (blackjackView.newRound(playingDeck));
+
     }
 }
