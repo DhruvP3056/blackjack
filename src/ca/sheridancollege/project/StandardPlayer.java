@@ -1,5 +1,7 @@
 package ca.sheridancollege.project;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Vigneshwar Premachandran
@@ -37,7 +39,18 @@ public class StandardPlayer extends Player{
         
     }
     
-
+ 
+     //This method checks the Array of players and returns the player object corresponding to the passed name.
+    public StandardPlayer getPlayerObject(ArrayList<StandardPlayer> players, String nameToCheck){
+        StandardPlayer temp = new StandardPlayer();
+        for(StandardPlayer player:players){
+            if(player.getName().equalsIgnoreCase(nameToCheck)){
+                temp = player;
+            }
+        }
+        return temp;
+    }
+    
     @Override
     public void play() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

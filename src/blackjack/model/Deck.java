@@ -23,7 +23,7 @@ It is adaptable to the programmers liking
  * @author Amanda Jose, 2021
  */
 public class Deck {
-
+    
     private ArrayList<Card> cards;
 
     public Deck() {
@@ -42,6 +42,11 @@ public class Deck {
         }
     }
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    
     //Shuffeling the Deck
     public void shuffle() {
         Collections.shuffle(this.cards);
